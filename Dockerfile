@@ -79,7 +79,7 @@ ENV SELF_UPDATER_SOURCE ''
 ENV PHANTOMJS_BIN_PATH /usr/local/bin/phantomjs
 
 COPY --chown=www-data:www-data . /var/www/app
-
+RUN mkdir -p /spool/logs
 WORKDIR /var/www/app
 
 COPY nginx.conf /etc/nginx/sites-enabled/default
