@@ -82,8 +82,8 @@ COPY --chown=www-data:www-data . /var/www/app
 RUN mkdir -p /spool/logs
 WORKDIR /var/www/app
 
-COPY nginx.conf /etc/nginx/sites-enabled/default
-COPY entrypoint.sh /entrypoint.sh
+COPY ./nginx.conf /etc/nginx/sites-enabled/default
+COPY ./entrypoint.sh /entrypoint.sh
 
 
 EXPOSE 80
