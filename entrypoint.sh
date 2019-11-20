@@ -42,5 +42,6 @@ chown	 www-data:www-data /var/www/app/public/logo
 	#touch "/var/www/app/is-seeded"
 #fi
 
-echo 'start'
-exec "$@"
+#!/usr/bin/env bash
+service nginx start
+php-fpm

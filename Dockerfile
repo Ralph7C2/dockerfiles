@@ -1,7 +1,11 @@
-ARG PHP_IMAGE_TAG=7.2-fpm-stretch
-FROM php:${PHP_IMAGE_TAG}
+FROM php:7.2-fpm
 
-LABEL maintainer="Samuel Laulhau <sam@lalop.co>"
+RUN apt-get update -y \
+    && apt-get install -y nginx
+
+# PHP_CPPFLAGS are used by the docker-php-ext-* scripts
+ENV PHP_CPPFLAGS="$PHP_CPPFLAGS -std=c++11"
+
 
 #####
 # SYSTEM REQUIREMENT
@@ -74,13 +78,13 @@ ENV LOG errorlog
 ENV SELF_UPDATER_SOURCE ''
 ENV PHANTOMJS_BIN_PATH /usr/local/bin/phantomjs
 
-
-# use to be mounted into nginx for example
-VOLUME /var/www/app/public
+COPY --chown=www-data:www-data . /var/www/app
 
 WORKDIR /var/www/app
 
 COPY entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["php-fpm"]
+
+EXPOSE 80 443
+
+ENTRYPOINT ["sh", "./entrypoint.sh"]
