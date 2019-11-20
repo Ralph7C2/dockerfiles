@@ -82,6 +82,7 @@ COPY --chown=www-data:www-data . /var/www/app
 
 WORKDIR /var/www/app
 
+COPY nginx-site.conf /etc/nginx/sites-enabled/default
 COPY entrypoint.sh /entrypoint.sh
 
 
