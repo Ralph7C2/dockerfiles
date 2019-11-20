@@ -83,6 +83,7 @@ RUN mkdir -p /spool/logs
 WORKDIR /var/www/app
 
 COPY ./nginx.conf /etc/nginx/sites-enabled/default
+RUN cat /etc/nginx/sites-enabled/default
 COPY ./entrypoint.sh /entrypoint.sh
 
 
