@@ -85,6 +85,6 @@ WORKDIR /var/www/app
 COPY entrypoint.sh /entrypoint.sh
 
 
-EXPOSE 80 443
+EXPOSE 80
 
 ENTRYPOINT ["sh", "./entrypoint.sh"]
