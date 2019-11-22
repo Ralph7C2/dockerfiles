@@ -78,13 +78,12 @@ ENV LOG errorlog
 ENV SELF_UPDATER_SOURCE ''
 ENV PHANTOMJS_BIN_PATH /usr/local/bin/phantomjs
 
-COPY --chown=www-data:www-data . /var/www/app
 RUN mkdir -p /spool/logs
 WORKDIR /var/www/app
-RUN mkdir -p /var/www/app/docker-backup-storage
+
 COPY ./nginx.conf /etc/nginx/nginx.conf
-COPY ./entrypoint.sh /entrypoint.sh
+COPY ./entrypoint.sh ./entrypoint.sh
 
 EXPOSE 80
 
-ENTRYPOINT ["sh", "/entrypoint.sh"]
+ENTRYPOINT ["sh", "./entrypoint.sh"]
