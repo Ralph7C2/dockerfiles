@@ -1,7 +1,7 @@
 FROM php:7.2-fpm
 
 RUN apt-get update -y \
-    && apt-get install -y nginx
+    && apt-get install -y nginx nano
 
 # PHP_CPPFLAGS are used by the docker-php-ext-* scripts
 ENV PHP_CPPFLAGS="$PHP_CPPFLAGS -std=c++11"
@@ -31,7 +31,7 @@ RUN apt-get update \
     && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/ \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-configure gmp \
-    && docker-php-ext-install iconv mbstring pdo pdo_mysql zip gd gmp opcache nano
+    && docker-php-ext-install iconv mbstring pdo pdo_mysql zip gd gmp opcache
 
 ENV PHANTOMJS phantomjs-2.1.1-linux-x86_64
 # Install PHANTOMJS
