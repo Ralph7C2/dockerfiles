@@ -3,7 +3,9 @@ set -e
 
 INVOICENINJA_VERSION=4.5.16
 
+echo "Checking for InvoiceNina"
 if [ ! -d /var/www/app/public ]; then
+  echo "Installing InvoiceNina"
   curl -o ninja.zip -SL https://download.invoiceninja.com/ninja-v${INVOICENINJA_VERSION}.zip \
       && unzip -q ninja.zip -d /var/www/ \
       && rm ninja.zip \
@@ -15,11 +17,16 @@ if [ ! -d /var/www/app/public ]; then
       && chmod -R 755 /var/www/app/storage  \
       && chown -R www-data:www-data /var/www/app/storage /var/www/app/bootstrap /var/www/app/public/logo /var/www/app/.env /var/www/app/docker-backup-storage /var/www/app/docker-backup-public\
       && rm -rf /var/www/app/docs /var/www/app/tests /var/www/ninja
+else
+  echo "InvoiceNinja already installed"
 fi
 
+echo "Checking for stoage"
 if [ ! -d /var/www/app/storage ]; then
+  echo "Restoring from backup"
 	cp -Rp /var/www/app/docker-backup-storage /var/www/app/storage
 else
+  echo "Doing other storage stuff"
 	IN_STORAGE_BACKUP="$(ls /var/www/app/docker-backup-storage/)"
 	for path in $IN_STORAGE_BACKUP; do
 		if [ ! -e "/var/www/app/storage/$path" ]; then
@@ -46,6 +53,7 @@ if [ ! -e /var/www/app/public/version ] || [ "$INVOICENINJA_VERSION" != "$(cat /
   echo $INVOICENINJA_VERSION > /var/www/app/public/version
 fi
 
+echo "Setting owner for nginx"
 # fix permission for monted directories
 chown www-data:www-data /var/www/app/storage
 chown	 www-data:www-data /var/www/app/public/logo
@@ -58,6 +66,7 @@ chown	 www-data:www-data /var/www/app/public/logo
 	#touch "/var/www/app/is-seeded"
 #fi
 
-#!/usr/bin/env bash
+echo "Launching"
+
 service nginx start
 php-fpm
