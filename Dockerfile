@@ -81,11 +81,9 @@ ENV PHANTOMJS_BIN_PATH /usr/local/bin/phantomjs
 COPY --chown=www-data:www-data . /var/www/app
 RUN mkdir -p /spool/logs
 WORKDIR /var/www/app
-
+RUN mkdir -p /var/www/app/docker-backup-storage
 COPY ./nginx.conf /etc/nginx/nginx.conf
-RUN cat /etc/nginx/nginx.conf
 COPY ./entrypoint.sh /entrypoint.sh
-
 
 EXPOSE 80
 
