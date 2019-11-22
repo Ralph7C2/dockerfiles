@@ -1,5 +1,21 @@
-#!/bin/bash
+#!/bin/sh
 set -e
+
+INVOICENINJA_VERSION=4.5.16
+
+if [ ! -d /var/www/app/public ]; then
+  curl -o ninja.zip -SL https://download.invoiceninja.com/ninja-v${INVOICENINJA_VERSION}.zip \
+      && unzip -q ninja.zip -d /var/www/ \
+      && rm ninja.zip \
+      && mv /var/www/ninja /var/www/app  \
+      && mv /var/www/app/storage /var/www/app/docker-backup-storage  \
+      && mv /var/www/app/public /var/www/app/docker-backup-public  \
+      && mkdir -p /var/www/app/public/logo /var/www/app/storage \
+      && touch /var/www/app/.env \
+      && chmod -R 755 /var/www/app/storage  \
+      && chown -R www-data:www-data /var/www/app/storage /var/www/app/bootstrap /var/www/app/public/logo /var/www/app/.env /var/www/app/docker-backup-storage /var/www/app/docker-backup-public\
+      && rm -rf /var/www/app/docs /var/www/app/tests /var/www/ninja
+fi
 
 if [ ! -d /var/www/app/storage ]; then
 	cp -Rp /var/www/app/docker-backup-storage /var/www/app/storage
