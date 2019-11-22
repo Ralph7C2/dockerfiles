@@ -6,7 +6,7 @@ INVOICENINJA_VERSION=4.5.16
 echo "Checking for InvoiceNina"
 if [ ! -d /var/www/app/public ]; then
   (
-  mdkir -p /ninja
+  mkdir -p /ninja
   cd /ninja
   echo "Installing InvoiceNina"
   curl -o ninja.zip -SL https://download.invoiceninja.com/ninja-v${INVOICENINJA_VERSION}.zip
