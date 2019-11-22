@@ -5,18 +5,21 @@ INVOICENINJA_VERSION=4.5.16
 
 echo "Checking for InvoiceNina"
 if [ ! -d /var/www/app/public ]; then
+  (
+  mdkir -p /ninja
+  cd /ninja
   echo "Installing InvoiceNina"
-  curl -o ninja.zip -SL https://download.invoiceninja.com/ninja-v${INVOICENINJA_VERSION}.zip \
-      && unzip -q ninja.zip -d /var/www/ \
-      && rm ninja.zip \
-      && mv /var/www/ninja /var/www/app  \
+  curl -o ninja.zip -SL https://download.invoiceninja.com/ninja-v${INVOICENINJA_VERSION}.zip
+  unzip -q ninja.zip -d /var/www/
+  rm ninja.zip
+  mv /var/www/ninja /var/www/app  \
       && mv /var/www/app/storage /var/www/app/docker-backup-storage  \
       && mv /var/www/app/public /var/www/app/docker-backup-public  \
       && mkdir -p /var/www/app/public/logo /var/www/app/storage \
       && touch /var/www/app/.env \
       && chmod -R 755 /var/www/app/storage  \
       && chown -R www-data:www-data /var/www/app/storage /var/www/app/bootstrap /var/www/app/public/logo /var/www/app/.env /var/www/app/docker-backup-storage /var/www/app/docker-backup-public\
-      && rm -rf /var/www/app/docs /var/www/app/tests /var/www/ninja
+  )
 else
   echo "InvoiceNinja already installed"
 fi
