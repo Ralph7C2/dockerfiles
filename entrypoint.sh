@@ -5,12 +5,9 @@ INVOICENINJA_VERSION=4.5.16
 
 echo "Checking for InvoiceNina"
 if [ ! -d /var/www/app/public ]; then
-  (
-  mkdir -p /ninja
-  cd /ninja
   echo "Installing InvoiceNina"
   curl -o ninja.zip -SL https://download.invoiceninja.com/ninja-v${INVOICENINJA_VERSION}.zip
-  unzip -q ninja.zip -d /var/www/
+  unzip -q ninja.zip -d /var/www/ninja
   rm ninja.zip
   mv /var/www/ninja /var/www/app  \
       && mv /var/www/app/storage /var/www/app/docker-backup-storage  \
